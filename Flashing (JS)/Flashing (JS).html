@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>YOU'VE BEEN HACKED</title>
+
+    <style media="screen">
+      body {
+        margin: 0;
+        padding: 0;
+        width: 100vw;
+        height: 100vh;
+      }
+
+      #main {
+        padding: 0 1em;
+        position: relative;
+        top: 50%;
+        transform: translateY(-50%);
+        text-align: center;
+        font-family: 'Courier New', monospace;
+        font-size: 125px;
+        text-shadow: 0 0 5px #eed202;
+        font-weight: 600;
+      }
+
+      .nonexistant {
+        display: none;
+      }
+
+    </style>
+
+
+  </head>
+  <body>
+    <div id="main">
+      YOU'VE BEEN HACKED
+    </div>
+
+    <script type="text/javascript">
+      let body = document.querySelector('body')
+      let backgroundColors = ["blue", "green", "orange"]
+
+      class Background {
+        //colors chosen from approval.studio/blog/worst-color-combinations/
+
+        static backgroundColors = ["#ff3ac6", "#5fa41c", "#ff1a00", "#009b00"];
+        static colorIndex = -1;
+        static changeRate = 200;
+      }
+
+      function changeBackground() {
+        Background.colorIndex++;
+        Background.colorIndex %= 3;
+
+        body.style.background = Background.backgroundColors[Background.colorIndex]
+      }
+
+
+      body.addEventListener("click", function() {alert("Yield yourselves up unto us, and unite with us and become acquainted with our secret works, and become our brethren that ye may be like unto us—not our slaves, but our brethren and partners of all our substance")})
+      window.addEventListener("beforeunload", function(event) {event.returnValue = "Panic!!!"});
+
+      window.setInterval(changeBackground, Background.changeRate)
+      window.onbeforeunload = function(){return "panic"}
+
+
+      changeBackground()
+
+
+      console.log(Background.colorIndex)
+      console.log(Background.backgroundColors)
+
+    </script>
+  </body>
+  <footer>
+
+    <div class="nonexistant">
+      <p>Made by Elder Yauney (using Atom)</p>
+      <p>2022.05.26</p>
+    </div>
+
+  </footer>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>YOU'VE BEEN HACKED</title>
+
+    <style media="screen">
+      body {
+        margin: 0;
+        padding: 0;
+        width: 100vw;
+        height: 100vh;
+        overflow: hidden;
+
+        background: darkslategray;
+        animation: color 1000ms infinite;
+        animation-fill-mode: backwards;
+      }
+
+      #main {
+        padding: 0 1em;
+        position: relative;
+        top: 50%;
+        transform: translateY(-50%);
+        text-align: center;
+        font-family: 'Courier New', monospace;
+        font-size: 125px;
+        text-shadow: 0 0 5px darkgreen;
+        font-weight: 600;
+      }
+
+      .code {
+        font-size: 40px;
+        color: darkgreen;
+        font-family: monospace;
+        text-shadow: 0 0 3px darkslategray;
+        top: 0;
+        position: absolute;
+        animation: downwards 500ms linear 0s infinite;
+        animation-fill-mode: backwards;
+      }
+
+      @keyframes color {
+        50% {background: darkgray}
+      }
+
+      @keyframes downwards {
+        0% {padding-top: 0px;}
+        100% {padding-top: 30vh;}
+
+      }
+
+      .nonexistant {
+        display: none;
+      }
+
+    </style>
+
+  </head>
+  <body>
+    <div id="main">
+      YOU'VE BEEN HACKED
+    </div>
+
+    <script type="text/javascript">
+
+      const body = document.querySelector('body')
+      const chars = "1234567890ABCDEF"
+
+      function createChar(char=chars.charAt(parseInt(Math.random() * chars.length))) {
+        let elem = document.createElement("span");
+        elem.innerText = char;
+        elem.style.top = Math.round(Math.random() * 100 - 20) + "vh";
+        elem.style.left = Math.round(Math.random() * 100) + "vw";
+        elem.classList.add("code");
+
+        body.appendChild(elem);
+
+
+        setTimeout(function(){elem.remove()}, 5000)
+      }
+
+
+
+
+      body.addEventListener("click", function() {alert("Yield yourselves up unto us, and unite with us and become acquainted with our secret works, and become our brethren that ye may be like unto us—not our slaves, but our brethren and partners of all our substance")})
+      window.addEventListener("beforeunload", function(event) {event.returnValue = "Panic!!!"});
+
+
+      window.setInterval(createChar, 50)
+
+    </script>
+  </body>
+  <footer>
+
+    <div class="nonexistant">
+      <p>Made by Elder Yauney (using Atom)</p>
+      <p>2022.05.26</p>
+    </div>
+
+  </footer>
+</html>

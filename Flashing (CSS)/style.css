@@ -1,0 +1,42 @@
+body {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+
+  animation: color 1000ms step-end 0s infinite;
+  animation-fill-mode: backwards;
+}
+
+#main {
+  padding: 0 1em;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  text-align: center;
+  font-family: 'Courier New', monospace;
+  font-size: 125px;
+  text-shadow: 0 0 5px #eed202;
+  font-weight: 600;
+}
+
+@keyframes color {
+  0% {background: #ff3ac6;}
+  25% {background: #5fa41c;}
+  50% {background: #ff1a00;}
+  75% {background: #009b00;}
+}
+
+.nonexistant {
+  display: none;
+}
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}

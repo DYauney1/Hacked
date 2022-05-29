@@ -1,0 +1,80 @@
+body {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.graygreen {
+  background: darkslategray;
+
+  animation: graygreen 20000ms infinite;
+  animation-fill-mode: backwards;
+}
+
+.flashy {
+  background: #ff3a36;
+
+  animation: flashy 1000ms ease-out infinite;
+  animation-fill-mode: backwards;
+}
+
+#main {
+  padding: 0 1em;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  text-align: center;
+  font-family: 'Courier New', monospace;
+  font-size: 125px;
+  text-shadow: 0 0 5px darkgreen;
+  font-weight: 600;
+}
+
+.flashy #main {
+  text-shadow: 0 0 5px #eed202;
+}
+
+.code {
+  font-size: 40px;
+  color: darkgreen;
+  font-family: monospace;
+  text-shadow: 0 0 3px darkslategray;
+  top: 0;
+  position: absolute;
+  animation: downwards 500ms linear 0s infinite;
+  /* animation-fill-mode: backwards; */
+}
+
+@keyframes graygreen {
+  50% {background: #314131;}
+}
+
+@keyframes flashy {
+  20% {background: #df741c;}
+  40% {background: #dfa41c;}
+  60% {background: #e28129;}
+  80% {background: #b215f3;}
+  /* to  {background: goldenrod;} */
+}
+
+@keyframes downwards {
+  0% {padding-top: 0px;}
+  100% {padding-top: 45vh;}
+
+}
+
+.nonexistant {
+  display: none;
+}
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
