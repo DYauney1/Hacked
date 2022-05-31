@@ -1,6 +1,8 @@
 const body = document.querySelector('body');
 const chars = "1234567890ABCDEF";
 let menuVisibile = false;
+let canInterrupt = true;
+const timeoutInterval = 5000;
 
 /**
  * random - I made this primarily for legibility purposes
@@ -49,25 +51,6 @@ function createChar(char="Random", lifeSpan=10000) {
 
 
 
-let canInterrupt = true;
-
-/**
- * setNephi - This function, in conjunction with the variable
- * canInterrupt, is used to make sure that the alert isn't
- * triggered too often
- *
- * @return {null}  does not return a value
- */
-function setNephi() {
-  if(canInterrupt) {
-    alert(`Yield yourselves up unto us, and unite with us and become acquainted with our secret works, and become our brethren that ye may be like unto us - not our slaves, but our brethren and partners of all our substance.`);
-    canInterrupt = false;
-
-    setTimeout(function() {
-      canInterrupt = true;
-    }, 7500)
-  }
-}
 
 function helpMenu() {
   document.querySelector("#help").innerHTML = "";
@@ -96,11 +79,60 @@ function helpMenu() {
   if(menuVisibile) {
     document.querySelector("#help").classList.remove("grow");
     document.querySelector("#help").classList.add("shrink");
+
+    setInterruptTimer(false);
+
   } else {
     document.querySelector("#help").classList.remove("shrink");
     document.querySelector("#help").classList.add("grow");
+
+    setInterruptTimer(true);
+
   }
   menuVisibile = !menuVisibile;
+}
+
+let interruptTimer;
+function setInterruptTimer(setUp=false) {
+
+  canInterrupt = false;
+
+  if(setUp) {
+
+    clearInterval(interruptTimer);
+
+  } else {
+
+    interruptTimer = setTimeout(function() {
+      canInterrupt = true;
+    }, timeoutInterval)
+  }
+}
+
+
+function cover(setUp=false) {
+
+  if(setUp) {
+    let elem = document.createElement("div");
+    elem.classList.add("cover");
+    body.appendChild(elem);
+
+    setInterruptTimer(true);
+
+
+  } else if(document.querySelector(".cover")) {
+
+    document.querySelector(".cover").remove();
+    setInterruptTimer();
+
+
+  } else if(canInterrupt) {
+
+    alert(`Yield yourselves up unto us, and unite with us and become acquainted with our secret works, and become our brethren that ye may be like unto us - not our slaves, but our brethren and partners of all our substance.`);
+
+    setInterruptTimer();
+  }
+
 }
 
 let creatorInterval = [];
@@ -160,12 +192,16 @@ function process(codeType) {
     case "Escape":
       if(menuVisibile) process("?");
       break;
+    case "S":
+      cover(true);
+      break;
     default:
   }
 }
 
 let helpInfo = {
   "?": 'Show/hide help menu',
+  "S": 'Covers screen in black',
   "F": 'Switches to flashing background',
   "C": 'Switches to matrix (slow)',
   "!": 'Starts matrix (slow)',
@@ -179,7 +215,8 @@ let helpInfo = {
   "B": 'Switches to matrix (slow), removes main text'
 }
 
-body.addEventListener("mousemove", setNephi)
+
+body.addEventListener("mousemove", function() {cover(false)})
 
 body.addEventListener("keyup", function() {process(event.key)})
 
