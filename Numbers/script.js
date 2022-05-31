@@ -2,7 +2,7 @@ const body = document.querySelector('body');
 const chars = "1234567890ABCDEF";
 let menuVisibile = false;
 let canInterrupt = true;
-const timeoutInterval = 5000;
+const timeoutInterval = 15000;
 
 /**
  * random - I made this primarily for legibility purposes
@@ -58,13 +58,19 @@ function helpMenu() {
   function addItem(parent, type, text, ...classes) {
     let elem = document.createElement(type);
     elem.innerText = text;
-    if(classes.length != 0) elem.classList.add(classes);
+    if(classes.length != 0) classes.forEach(element => elem.classList.add(element));
 
     document.querySelector(parent).appendChild(elem);
   }
 
+  //adds column labels at the top
+  addItem("#help", "div", "", "row")
+  addItem("#help > div:last-child", "span", "Key (case sensitive)", "key");
+  addItem("#help > div:last-child", "span", "Action performed", "explanation");
+  document.querySelector("#help > div:last-child").title = "Having trouble? Keep 'Shift' pressed down until after the other key has been released!";
+
   for(const [key, value] of Object.entries(helpInfo)) {
-    addItem("#help", "div", "", "row")
+    addItem("#help", "div", "", "row", "row-hoverable")
     addItem("#help > div:last-child", "span", key, "key");
     addItem("#help > div:last-child", "span", value, "explanation");
 
@@ -119,18 +125,25 @@ function cover(setUp=false) {
 
     setInterruptTimer(true);
 
-
-  } else if(document.querySelector(".cover")) {
-
-    document.querySelector(".cover").remove();
-    setInterruptTimer();
+    //for leniency cooldown purposes
+    setTimeout(function() {
+      canInterrupt = true;
+    }, 2500)
 
 
   } else if(canInterrupt) {
 
-    alert(`Yield yourselves up unto us, and unite with us and become acquainted with our secret works, and become our brethren that ye may be like unto us - not our slaves, but our brethren and partners of all our substance.`);
+    if(document.querySelector(".cover")) {
 
-    setInterruptTimer();
+     document.querySelector(".cover").remove();
+     setInterruptTimer();
+
+    } else {
+
+      alert(`Yield yourselves up unto us, and unite with us and become acquainted with our secret works, and become our brethren that ye may be like unto us - not our slaves, but our brethren and partners of all our substance.`);
+
+      setInterruptTimer();
+    }
   }
 
 }
@@ -177,6 +190,7 @@ function process(codeType) {
       break;
     case "C":
       body.className = "graygreen";
+      document.querySelector("#main").innerHTML = "YOU'VE BEEN HACKED"
       process("!");
       break;
     case "V":

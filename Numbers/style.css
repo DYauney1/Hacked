@@ -90,20 +90,19 @@ body {
   border-radius: 5px;
   height: 1.5em;
   line-height: 1.5em;
-  cursor: pointer;
   background: lightgray;
 
   display: flex;
 }
 
 .key {
-  background: linear-gradient(to right, darkslategray 80%, lightgray);
+  background: linear-gradient(to right, darkslategray calc(100% - 15px), transparent);
   /* border-radius: inherit; */
   color: #e3e3e3;
-  padding-right: 10px;
+  padding: 0 20px 0 10px;
   /* box-shadow: -0px 0 0 1px darkslategray; */
   text-align: center;
-  width: 50px;
+  min-width: 30px;
   transition: 0.2s;
 }
 
@@ -114,12 +113,14 @@ body {
   transition: 0.2s;
 }
 
-.row:hover {
+.row-hoverable {
+  cursor: pointer;
+} .row-hoverable:hover {
   border-color: black;
   background: #c2c2c2;
-} .row:hover .key {
+} .row-hoverable:hover .key {
   color: white;
-} .row:hover .explanation {
+} .row-hoverable:hover .explanation {
   color: black;
 }
 
