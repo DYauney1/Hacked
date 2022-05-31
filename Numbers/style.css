@@ -153,7 +153,7 @@ body {
 }
 
 @keyframes flashy {
-  20% {background: #df741c;}
+  20% {background: #35ea6b;}
   40% {background: #dfa41c;}
   60% {background: #e28129;}
   80% {background: #b215f3;}

@@ -190,7 +190,7 @@ function process(codeType) {
       break;
     case "C":
       body.className = "graygreen";
-      document.querySelector("#main").innerHTML = "YOU'VE BEEN HACKED"
+      document.querySelector("#main").classList.remove("nonexistant");
       process("!");
       break;
     case "V":

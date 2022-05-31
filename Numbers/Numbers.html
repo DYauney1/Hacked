@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
-    <meta charset="UTF-16">
+    <meta charset="UTF-8">
     <title>Numbers</title>
 
     <style media="screen">
@@ -154,6 +154,53 @@ body {
   background: black;
   cursor: none;
 }
+
+
+
+@keyframes graygreen {
+  50% {background: #314131;}
+}
+
+@keyframes flashy {
+  20% {background: #35ea6b;}
+  40% {background: #dfa41c;}
+  60% {background: #e28129;}
+  80% {background: #b215f3;}
+  /* to  {background: goldenrod;} */
+}
+
+@keyframes downwards {
+  0% {padding-top: 0px;}
+  100% {padding-top: 45vh;}
+
+}
+
+@keyframes grow {
+  from {display: block; transform: scale(0); opacity: 0;}
+  to   {display: block; transform: scale(1); opacity: 1;}
+
+}
+
+@keyframes shrink {
+  from {display: block; transform: scale(1); opacity: 1;}
+  99% {display: block; transform: scale(0); opacity: 0;}
+  to {display: none;}
+}
+
+.nonexistant {
+  display: none;
+}
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
+
 
 
 
@@ -409,7 +456,7 @@ function process(codeType) {
       break;
     case "C":
       body.className = "graygreen";
-      document.querySelector("#main").innerHTML = "YOU'VE BEEN HACKED"
+      document.querySelector("#main").classList.remove("nonexistant");
       process("!");
       break;
     case "V":
