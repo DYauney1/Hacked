@@ -16,7 +16,7 @@ body {
 .flashy {
   background: #ff3a36;
 
-  animation: flashy 1000ms ease-out infinite;
+  animation: flashy 500ms ease-out infinite;
   animation-fill-mode: backwards;
 }
 
@@ -48,7 +48,7 @@ body {
   /* animation-fill-mode: backwards; */
 }
 
-#help {
+#menu {
   width: 80%;
   max-width: 800px;
   height: 75vh;
@@ -73,12 +73,12 @@ body {
 
 
 } @media screen and (min-width: 1000px) {
-  #help {
+  #menu {
     left: calc(50vw - 400px)
   }
 }
 
-#help::-webkit-scrollbar {
+#menu::-webkit-scrollbar {
   display: none;
 }
 
@@ -122,6 +122,18 @@ body {
   color: white;
 } .row-hoverable:hover .explanation {
   color: black;
+}
+
+.source {
+  font: 18px Arial, sans-serif;
+  text-align: center;
+  background: lightgray;
+  /* width: 80%; */
+  border: 2px solid darkslategray;
+  border-radius: 15px;
+  margin: 0.5em auto;
+  padding: 0.5em;
+  position: relative;
 }
 
 .grow {

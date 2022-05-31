@@ -1,8 +1,10 @@
 const body = document.querySelector('body');
+const menu = document.querySelector("#menu");
 const chars = "1234567890ABCDEF";
 let menuVisibile = false;
-let canInterrupt = true;
-const timeoutInterval = 15000;
+let interruptable = false;
+let canInterrupt = interruptable;
+const timeoutInterval = 5000;
 
 /**
  * random - I made this primarily for legibility purposes
@@ -52,9 +54,10 @@ function createChar(char="Random", lifeSpan=10000) {
 
 
 
-function helpMenu() {
-  document.querySelector("#help").innerHTML = "";
+function toggleMenu(menuType) {
+  menu.innerHTML = "";
 
+  //helper function for help menu
   function addItem(parent, type, text, ...classes) {
     let elem = document.createElement(type);
     elem.innerText = text;
@@ -63,34 +66,78 @@ function helpMenu() {
     document.querySelector(parent).appendChild(elem);
   }
 
-  //adds column labels at the top
-  addItem("#help", "div", "", "row")
-  addItem("#help > div:last-child", "span", "Key (case sensitive)", "key");
-  addItem("#help > div:last-child", "span", "Action performed", "explanation");
-  document.querySelector("#help > div:last-child").title = "Having trouble? Keep 'Shift' pressed down until after the other key has been released!";
+  //helper function for source menu
+  function addSource(item) {
+    let elem = document.createElement("div");
+    elem.innerText = item;
+    elem.classList.add("source")
+    menu.appendChild(elem);
+  }
 
-  for(const [key, value] of Object.entries(helpInfo)) {
-    addItem("#help", "div", "", "row", "row-hoverable")
-    addItem("#help > div:last-child", "span", key, "key");
-    addItem("#help > div:last-child", "span", value, "explanation");
+  switch (menuType) {
+    case "help":
 
-    document.querySelector("#help > div:last-child").title = value;
-    document.querySelector("#help > div:last-child").addEventListener("click", function() {
-      process(key);
-      if(key != "?") process("?");
-    });
+      //adds column labels at the top
+      addItem("#menu", "div", "", "row")
+      addItem("#menu > div:last-child", "span", "Key (case sensitive)", "key");
+      addItem("#menu > div:last-child", "span", "Action performed", "explanation");
+      document.querySelector("#menu > div:last-child").title = "Having trouble? Keep 'Shift' pressed down until after the other key has been released!";
+
+      //iterates through helpInfo, creates row for each key/value
+      for(const [key, value] of Object.entries(helpInfo)) {
+        addItem("#menu", "div", "", "row", "row-hoverable")
+        addItem("#menu > div:last-child", "span", key, "key");
+        addItem("#menu > div:last-child", "span", value, "explanation");
+
+        document.querySelector("#menu > div:last-child").title = value;
+        document.querySelector("#menu > div:last-child").addEventListener("click", function() {
+          process(key);
+          if(key != "?") process("?");
+        });
+
+      }
+      break;
+    case "sources":
+
+    //crazy that it's so much simpler than the other one...
+    sourcesInfo.forEach(item => addSource(item))
+    default:
 
   }
 
+
+
   if(menuVisibile) {
-    document.querySelector("#help").classList.remove("grow");
-    document.querySelector("#help").classList.add("shrink");
+    menu.classList.remove("grow");
+    menu.classList.add("shrink");
 
     setInterruptTimer(false);
 
   } else {
-    document.querySelector("#help").classList.remove("shrink");
-    document.querySelector("#help").classList.add("grow");
+    menu.classList.remove("shrink");
+    menu.classList.add("grow");
+
+    setInterruptTimer(true);
+
+  }
+  menuVisibile = !menuVisibile;
+}
+
+
+function sourcesMenu() {
+  menu.innerHTML = "";
+
+
+
+  if(menuVisibile) {
+    menu.classList.remove("grow");
+    menu.classList.add("shrink");
+
+    setInterruptTimer(false);
+
+  } else {
+    menu.classList.remove("shrink");
+    menu.classList.add("grow");
 
     setInterruptTimer(true);
 
@@ -100,15 +147,15 @@ function helpMenu() {
 
 let interruptTimer;
 function setInterruptTimer(setUp=false) {
-
   canInterrupt = false;
 
-  if(setUp) {
+  //makes dev a lot easier
+  if(!interruptable) return false;
 
+  if(setUp) {
     clearInterval(interruptTimer);
 
   } else {
-
     interruptTimer = setTimeout(function() {
       canInterrupt = true;
     }, timeoutInterval)
@@ -162,7 +209,7 @@ function process(codeType) {
 
   switch (codeType) {
     case "?":
-      helpMenu();
+      toggleMenu();
       break;
     case "!":
       createWith("Random", 4000, 500);
@@ -197,6 +244,10 @@ function process(codeType) {
       body.className = "graygreen";
       process("Q");
       break;
+    case "J":
+      interruptable = !interruptable;
+      setInterruptTimer(!interruptable);
+      break;
     case "B":
       body.style.background = "#314131";
       process("V");
@@ -209,11 +260,15 @@ function process(codeType) {
     case "S":
       cover(true);
       break;
+    case "<":
+    case ">":
+      process("V");
+      sourcesMenu();
     default:
   }
 }
 
-let helpInfo = {
+const helpInfo = {
   "?": 'Show/hide help menu',
   "S": 'Covers screen in black',
   "F": 'Switches to flashing background',
@@ -226,8 +281,30 @@ let helpInfo = {
   "Q": 'Stops matrix',
   "L": 'Starts "LOL" matrix numbers',
   "V": 'Switches to matrix colors',
-  "B": 'Switches to matrix (slow), removes main text'
+  "B": 'Switches to matrix (slow), removes main text',
+  "J": 'Toggles if popups can pop up',
+  ">": 'Shows source & dev story'
 }
+
+const sourcesInfo = [
+`This project has been thoroughly enjoyable for me to make. I started out simply hoping to make a basic little project that looked bad (intentionally, yeah) but as time went on I began to realize how much potential there was for different little jokes, as well as a quality system bridging them together, so I put the time in and I made it happen (or at least I tried...).`,
+
+`The first one was what is now the default, the flashing background (though the colors have, and probably will continue to change). The idea for this one came from Elder Wright, as did half of the project as a whole. The flashing background was originally done in javascript, but I learned that @keyframe could be of use, and I had lots of fun learning how to use it.`,
+
+`With that css journey under my belt, I went on to make the first iteration of the Matrix, though it was in a separate file. After some tinkering and changes, I decided that I could actually merge the flashing background into this site. Ironically, with most of the project done, that's where the journey began.`,
+
+`I started cleaning up the code, and testing out different features and options, like the unicorns, the menu, and others that didn't work out like the rickroll and the wake lock. I put a decent chunk of my free time into the project, and by the end of the weekend I had something that I was willing to show to someone else, and Elder Wright loved it. I thought I could do better though.`,
+
+`This is pretty much the present, but I do still have a couple more shout-outs and mentions for the project, but as the story goes on I intend to add to this with all my notes and thoughts.`,
+
+`This project was created entirely from scratch, using HTML, CSS, and JavaScript.`,
+
+`This project was created entirely within the Atom text editor/IDE, and is available on GitHub (though I won't tell you where)`,
+
+`This project was not officially approved by anyone, but the enthusiasm I received while making it was enough to keep me going`,
+
+`Made with love by Elder Yauney`
+]
 
 
 body.addEventListener("mousemove", function() {cover(false)})
