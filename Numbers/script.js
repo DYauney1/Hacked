@@ -1,6 +1,6 @@
 const body = document.querySelector('body');
 const chars = "1234567890ABCDEF";
-
+let menuVisibile = false;
 
 /**
  * random - I made this primarily for legibility purposes
@@ -69,8 +69,44 @@ function setNephi() {
   }
 }
 
+function helpMenu() {
+  document.querySelector("#help").innerHTML = "";
+
+  function addItem(parent, type, text, ...classes) {
+    let elem = document.createElement(type);
+    elem.innerText = text;
+    if(classes.length != 0) elem.classList.add(classes);
+
+    document.querySelector(parent).appendChild(elem);
+  }
+
+  for(const [key, value] of Object.entries(helpInfo)) {
+    addItem("#help", "div", "", "row")
+    addItem("#help > div:last-child", "span", key, "key");
+    addItem("#help > div:last-child", "span", value, "explanation");
+
+    document.querySelector("#help > div:last-child").title = value;
+    document.querySelector("#help > div:last-child").addEventListener("click", function() {
+      process(key);
+      if(key != "?") process("?");
+    });
+
+  }
+
+  if(menuVisibile) {
+    document.querySelector("#help").classList.remove("grow");
+    document.querySelector("#help").classList.add("shrink");
+  } else {
+    document.querySelector("#help").classList.remove("shrink");
+    document.querySelector("#help").classList.add("grow");
+  }
+  menuVisibile = !menuVisibile;
+}
+
 let creatorInterval = [];
 function process(codeType) {
+
+  // console.log(`Key Pressed: ${codeType}`)
 
   function createWith(char, lifeSpan, coolDown, removePrevious=true) {
     if(removePrevious) {
@@ -80,6 +116,9 @@ function process(codeType) {
   }
 
   switch (codeType) {
+    case "?":
+      helpMenu();
+      break;
     case "!":
       createWith("Random", 4000, 500);
       break;
@@ -117,13 +156,36 @@ function process(codeType) {
       process("V");
       process("#");
       document.querySelector("#main").classList.add("nonexistant");
+      break;
+    case "Y":
+      console.log("Not ready yet");
+      break;
+    case "Escape":
+      if(menuVisibile) process("?");
+      break;
     default:
   }
 }
 
+let helpInfo = {
+  "?": 'Show/hide help menu',
+  "F": 'Switches to flashing background',
+  "Y": '(Unimplemented) Switches to Rickroll',
+  "C": 'Switches to matrix (slow)',
+  "!": 'Starts matrix numbers (slow)',
+  "@": 'Starts matrix numbers (medium)',
+  "#": 'Starts matrix numbers (fast)',
+  "$": 'Starts unicorn matrix numbers',
+  "%": 'Starts unicorn/slow text matrix numbers',
+  "Q": 'Stops matrix numbers',
+  "L": 'Starts "LOL" matrix numbers ',
+  "V": 'Switches to matrix colors',
+  "B": 'Switches to matrix colors, removes main text'
+}
+
 body.addEventListener("mousemove", setNephi)
 
-body.addEventListener("keypress", function() {process(event.key)})
+body.addEventListener("keyup", function() {process(event.key)})
 
 //the actual return value does not matter on virtually every
 // browser, but I thought it'd be funny to say Panic!!.
