@@ -59,6 +59,7 @@ let canInterrupt = true;
  * @return {null}  does not return a value
  */
 function setNephi() {
+  return false;
   if(canInterrupt) {
     alert(`Yield yourselves up unto us, and unite with us and become acquainted with our secret works, and become our brethren that ye may be like unto us - not our slaves, but our brethren and partners of all our substance.`);
     canInterrupt = false;
@@ -172,15 +173,15 @@ let helpInfo = {
   "F": 'Switches to flashing background',
   "Y": '(Unimplemented) Switches to Rickroll',
   "C": 'Switches to matrix (slow)',
-  "!": 'Starts matrix numbers (slow)',
-  "@": 'Starts matrix numbers (medium)',
-  "#": 'Starts matrix numbers (fast)',
-  "$": 'Starts unicorn matrix numbers',
-  "%": 'Starts unicorn/slow text matrix numbers',
-  "Q": 'Stops matrix numbers',
-  "L": 'Starts "LOL" matrix numbers ',
+  "!": 'Starts matrix (slow)',
+  "@": 'Starts matrix (medium)',
+  "#": 'Starts matrix (fast)',
+  "$": 'Starts unicorn matrix',
+  "%": 'Starts slow text/unicorn matrix',
+  "Q": 'Stops matrix',
+  "L": 'Starts "LOL" matrix numbers',
   "V": 'Switches to matrix colors',
-  "B": 'Switches to matrix colors, removes main text'
+  "B": 'Switches to matrix (slow), removes main text'
 }
 
 body.addEventListener("mousemove", setNephi)
