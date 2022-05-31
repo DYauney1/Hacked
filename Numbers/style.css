@@ -20,9 +20,6 @@ body {
   animation-fill-mode: backwards;
 }
 
-.rickroll {
-  background: blue;
-}
 
 #main {
   padding: 0 1em;

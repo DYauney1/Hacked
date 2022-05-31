@@ -59,7 +59,6 @@ let canInterrupt = true;
  * @return {null}  does not return a value
  */
 function setNephi() {
-  return false;
   if(canInterrupt) {
     alert(`Yield yourselves up unto us, and unite with us and become acquainted with our secret works, and become our brethren that ye may be like unto us - not our slaves, but our brethren and partners of all our substance.`);
     canInterrupt = false;
@@ -158,9 +157,6 @@ function process(codeType) {
       process("#");
       document.querySelector("#main").classList.add("nonexistant");
       break;
-    case "Y":
-      console.log("Not ready yet");
-      break;
     case "Escape":
       if(menuVisibile) process("?");
       break;
@@ -171,7 +167,6 @@ function process(codeType) {
 let helpInfo = {
   "?": 'Show/hide help menu',
   "F": 'Switches to flashing background',
-  "Y": '(Unimplemented) Switches to Rickroll',
   "C": 'Switches to matrix (slow)',
   "!": 'Starts matrix (slow)',
   "@": 'Starts matrix (medium)',
