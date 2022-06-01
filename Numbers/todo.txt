@@ -1,4 +1,1 @@
 click outside menu shrinks menu
-finish source citation
-combine source & help menu to single function
-make menu switching cleaner

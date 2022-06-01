@@ -134,6 +134,12 @@ body {
   margin: 0.5em auto;
   padding: 0.5em;
   position: relative;
+} .source::before {
+  content: ">";
+  color: darkgreen;
+  font-family: 'Courier New', monospace;
+  padding-right: 5px;
+  font-weight: 700;
 }
 
 .grow {

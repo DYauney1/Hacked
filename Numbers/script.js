@@ -1,10 +1,11 @@
 const body = document.querySelector('body');
 const menu = document.querySelector("#menu");
 const chars = "1234567890ABCDEF";
-let menuVisibile = false;
+let menuVisible = false;
 let interruptable = false;
 let canInterrupt = interruptable;
 const timeoutInterval = 5000;
+
 
 /**
  * random - I made this primarily for legibility purposes
@@ -53,10 +54,8 @@ function createChar(char="Random", lifeSpan=10000) {
 
 
 
-
-function toggleMenu(menuType) {
-  menu.innerHTML = "";
-
+function toggleMenu(menuSetType) {
+  console.log("toggle ran")
   //helper function for help menu
   function addItem(parent, type, text, ...classes) {
     let elem = document.createElement(type);
@@ -68,14 +67,26 @@ function toggleMenu(menuType) {
 
   //helper function for source menu
   function addSource(item) {
+
     let elem = document.createElement("div");
     elem.innerText = item;
     elem.classList.add("source")
     menu.appendChild(elem);
   }
 
-  switch (menuType) {
-    case "help":
+
+  //prevents closing when switch should occur
+  if(!(menuVisible && menuSetType != menu.type)) menuVisible = !menuVisible;
+
+  //resets the innerHTML only when needed
+  if(menuSetType != menu.type) {
+
+    menu.innerHTML = "";
+
+    switch (menuSetType) {
+      case "help":
+
+      menu.type = "help";
 
       //adds column labels at the top
       addItem("#menu", "div", "", "row")
@@ -92,22 +103,29 @@ function toggleMenu(menuType) {
         document.querySelector("#menu > div:last-child").title = value;
         document.querySelector("#menu > div:last-child").addEventListener("click", function() {
           process(key);
-          if(key != "?") process("?");
+          //don't shrink if it's a menu one
+          if(!key.match(/[?><]/)) process("?");
+
         });
 
       }
       break;
-    case "sources":
+      case "sources":
 
-    //crazy that it's so much simpler than the other one...
-    sourcesInfo.forEach(item => addSource(item))
-    default:
+        console.log("sources ran")
+
+        //crazy that it's so much simpler than the other one...
+        menu.type = "sources";
+        sourcesInfo.forEach(item => addSource(item))
+        break;
+      default:
+
+    }
 
   }
 
 
-
-  if(menuVisibile) {
+  if(!menuVisible) {
     menu.classList.remove("grow");
     menu.classList.add("shrink");
 
@@ -120,30 +138,8 @@ function toggleMenu(menuType) {
     setInterruptTimer(true);
 
   }
-  menuVisibile = !menuVisibile;
 }
 
-
-function sourcesMenu() {
-  menu.innerHTML = "";
-
-
-
-  if(menuVisibile) {
-    menu.classList.remove("grow");
-    menu.classList.add("shrink");
-
-    setInterruptTimer(false);
-
-  } else {
-    menu.classList.remove("shrink");
-    menu.classList.add("grow");
-
-    setInterruptTimer(true);
-
-  }
-  menuVisibile = !menuVisibile;
-}
 
 let interruptTimer;
 function setInterruptTimer(setUp=false) {
@@ -209,7 +205,7 @@ function process(codeType) {
 
   switch (codeType) {
     case "?":
-      toggleMenu();
+      toggleMenu("help");
       break;
     case "!":
       createWith("Random", 4000, 500);
@@ -255,7 +251,7 @@ function process(codeType) {
       document.querySelector("#main").classList.add("nonexistant");
       break;
     case "Escape":
-      if(menuVisibile) process("?");
+      if(menuVisible) toggleMenu(menu.type);
       break;
     case "S":
       cover(true);
@@ -263,7 +259,8 @@ function process(codeType) {
     case "<":
     case ">":
       process("V");
-      sourcesMenu();
+      toggleMenu("sources");
+      break;
     default:
   }
 }
@@ -283,7 +280,7 @@ const helpInfo = {
   "V": 'Switches to matrix colors',
   "B": 'Switches to matrix (slow), removes main text',
   "J": 'Toggles if popups can pop up',
-  ">": 'Shows source & dev story'
+  ">": 'Shows sources & dev story'
 }
 
 const sourcesInfo = [
@@ -293,13 +290,15 @@ const sourcesInfo = [
 
 `With that css journey under my belt, I went on to make the first iteration of the Matrix, though it was in a separate file. After some tinkering and changes, I decided that I could actually merge the flashing background into this site. Ironically, with most of the project done, that's where the journey began.`,
 
+`The idea for this style of matrix comes from a documentary I watched in my freshman year of high school, where the background looked like this whenever they talked about something techy, and the kid sitting next to me pointed out that the background was actually just repeating downwards numbers, and I've never forgotten about it`,
+
 `I started cleaning up the code, and testing out different features and options, like the unicorns, the menu, and others that didn't work out like the rickroll and the wake lock. I put a decent chunk of my free time into the project, and by the end of the weekend I had something that I was willing to show to someone else, and Elder Wright loved it. I thought I could do better though.`,
 
 `This is pretty much the present, but I do still have a couple more shout-outs and mentions for the project, but as the story goes on I intend to add to this with all my notes and thoughts.`,
 
 `This project was created entirely from scratch, using HTML, CSS, and JavaScript.`,
 
-`This project was created entirely within the Atom text editor/IDE, and is available on GitHub (though I won't tell you where)`,
+`This project was created entirely within the Atom text editor/IDE, and is publicly available on GitHub (though I won't tell you where)`,
 
 `This project was not officially approved by anyone, but the enthusiasm I received while making it was enough to keep me going`,
 
