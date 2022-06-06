@@ -1,1 +1,8 @@
-click outside menu shrinks menu
+Delete numbers.html, rename project
+make the help menu animation tighter
+Finish Dev Story / sources
+Fix dev story link from ? menu
+add url data option to have some things executed on page load
+
+change menu from generating functions to class visibility (they're always there)
+make menu to switch the main font (Allerta Stencil, Alconica...)

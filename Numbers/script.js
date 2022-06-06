@@ -2,9 +2,9 @@ const body = document.querySelector('body');
 const menu = document.querySelector("#menu");
 const chars = "1234567890ABCDEF";
 let menuVisible = false;
-let interruptable = false;
+let interruptable = true;
 let canInterrupt = interruptable;
-const timeoutInterval = 5000;
+const timeoutInterval = 15000;
 
 
 /**
@@ -110,7 +110,6 @@ function toggleMenu(menuSetType=menu.type) {
       }
       break;
       case "sources":
-        console.log("Sources triggered")
 
         //crazy that it's so much simpler than the other one...
         menu.type = "sources";
@@ -124,7 +123,6 @@ function toggleMenu(menuSetType=menu.type) {
 
 
   if(menuVisible) {
-    console.log("menu is visible")
     menu.classList.remove("shrink");
     menu.classList.add("grow");
 
@@ -132,7 +130,6 @@ function toggleMenu(menuSetType=menu.type) {
 
   } else {
 
-    console.log("menu is not visible")
 
     menu.classList.remove("grow");
     menu.classList.add("shrink");
@@ -277,7 +274,7 @@ const helpInfo = {
   "$": 'Starts unicorn matrix',
   "%": 'Starts slow text/unicorn matrix',
   "Q": 'Stops matrix',
-  "L": 'Starts "LOL" matrix numbers',
+  "L": 'Starts "LOL" matrix',
   "V": 'Switches to matrix colors',
   "B": 'Switches to matrix (slow), removes main text',
   "J": 'Toggles if popups can pop up',
